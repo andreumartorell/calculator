@@ -2,7 +2,6 @@ import './App.css';
 import Boto from './components/Boto.js'
 import Pantalla from './components/Pantalla.js'
 import BotoClear from './components/BotoClear.js'
-import Logo from './components/Logo.js'
 import { useRef, useState } from 'react';
 import { evaluate, isInteger, number, typeOf } from 'mathjs'
 
@@ -12,12 +11,10 @@ function App() {
 
   const count = useRef(true)
   const countd = useRef(true)
-  const countr = useRef(true)
 
   const agregarInput = val => {
     setInput(input + val);
     count.current = true
-    countr.current = true
   };
 
   const operation = val => {
@@ -44,27 +41,15 @@ function App() {
     }
   };
 
-  const clear = () => {
-    setInput('')
-    countd.current = true
-  }
-
   const calcularResultat = () => {
-    console.log(countr.current)
-
     if (!input) alert('Por favor ingrese valores para realizar los cálculos')
-    else if (countr.current && count.current) {
-    setInput(evaluate(input));
-    if (!isInteger(evaluate(input))) countd.current = false
-    else countd.current = true
-    countr.current = false
-    
-    } 
+    else if ((typeOf(input) !== 'number') && count.current) {
+      setInput(evaluate(input));
+      if (!isInteger(evaluate(input))) countd.current = false
+      else countd.current = true
+      } 
     console.log('input:',input)
-    // console.log(evaluate(input))
-    // console.log(isInteger(evaluate(input)))
     console.log(isInteger(5.6))
-    // console.log(typeof(evaluate(input)))
     if (typeOf(input) == 'string') console.log('string')
     if (typeOf(input) == 'number') console.log('number')
   };
@@ -98,7 +83,7 @@ function App() {
           <Boto manejarClic={operation}>/</Boto>
         </div>
         <div className='fila'>
-          <BotoClear manejarClear={clear}>
+          <BotoClear manejarClear={() => setInput('')}>
             Clear
           </BotoClear>
         </div>

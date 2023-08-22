@@ -51,19 +51,17 @@ function App() {
 
   const calcularResultat = () => {
     console.log(countr.current)
-    // let x = evaluate(input)
 
-    if (countr.current && input && count.current) {
+    if (!input) alert('Por favor ingrese valores para realizar los cálculos')
+    else if (countr.current && count.current) {
     setInput(evaluate(input));
-    countd.current = true
+    if (!isInteger(evaluate(input))) countd.current = false
+    else countd.current = true
     countr.current = false
-    } else {
-      alert('Por favor ingrese valores para realizar los cálculos')
-    }
-    // if (!isInteger(evaluate(input))) countd.current = false
-    // console.log('input:',input)
+    
+    } 
+    console.log('input:',input)
     // console.log(evaluate(input))
-    // console.log(x)
     // console.log(isInteger(evaluate(input)))
     console.log(isInteger(5.6))
     // console.log(typeof(evaluate(input)))

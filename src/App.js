@@ -9,49 +9,39 @@ function App() {
 
   const [input, setInput] = useState('');
 
-  const count = useRef(true)
-  const countd = useRef(true)
+  const dec = useRef(true)
 
   const agregarInput = val => {
     setInput(input + val);
-    count.current = true
   };
 
   const operation = val => {
-    if (count.current && input) {
+    if ((!isNaN(input.at(-1))) && input) {
       setInput(input + val);
-      count.current = false
-      countd.current = true
+      dec.current = true
     } else if (!input) {
       setInput('0' + val)
-      count.current = false
-      countd.current = true
+      dec.current = true
     }
   };
 
-  const dec = val => {
-    if (count.current && countd.current && input) {
+  const decimal = val => {
+    if (dec.current && input && (!isNaN(input.at(-1)))) {
       setInput(input + val);
-      count.current = false
-      countd.current = false
+      dec.current = false
     } else if (!input) {
       setInput('0' + val)
-      count.current = false
-      countd.current = false
+      dec.current = false
     }
   };
 
   const calcularResultat = () => {
     if (!input) alert('Por favor ingrese valores para realizar los cálculos')
-    else if ((typeOf(input) !== 'number') && count.current) {
-      setInput(evaluate(input));
-      if (!isInteger(evaluate(input))) countd.current = false
-      else countd.current = true
-      } 
-    console.log('input:',input)
-    console.log(isInteger(5.6))
-    if (typeOf(input) == 'string') console.log('string')
-    if (typeOf(input) == 'number') console.log('number')
+    else if ((!isNaN(input.at(-1)))) {
+      setInput(evaluate(input).toString());
+      if (!isInteger(evaluate(input))) dec.current = false
+      else dec.current = true
+      }
   };
 
   return (
@@ -79,7 +69,7 @@ function App() {
         <div className='fila'>
           <Boto manejarClic={calcularResultat}>=</Boto>
           <Boto manejarClic={agregarInput}>0</Boto>
-          <Boto manejarClic={dec}>.</Boto>
+          <Boto manejarClic={decimal}>.</Boto>
           <Boto manejarClic={operation}>/</Boto>
         </div>
         <div className='fila'>

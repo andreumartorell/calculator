@@ -3,7 +3,7 @@ import Boto from './components/Boto.js'
 import Pantalla from './components/Pantalla.js'
 import BotoClear from './components/BotoClear.js'
 import { useRef, useState } from 'react';
-import { evaluate, isInteger, number, typeOf } from 'mathjs'
+import { evaluate, isInteger } from 'mathjs'
 
 function App() {
 
